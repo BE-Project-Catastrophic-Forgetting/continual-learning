@@ -20,8 +20,6 @@ from exemplars import ExemplarHandler
 from replayer import Replayer
 from param_values import set_default_values
 
-#Sarang is smort
-
 parser = argparse.ArgumentParser('./main.py', description='Run individual continual learning experiment.')
 parser.add_argument('--get-stamp', action='store_true', help='print param-stamp & exit')
 parser.add_argument('--seed', type=int, default=0, help='random seed (for each random-module used)')
