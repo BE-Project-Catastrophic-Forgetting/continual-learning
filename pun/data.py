@@ -177,7 +177,7 @@ def get_multitask_experiment(name, scenario, tasks, data_dir="./datasets", only_
     if name == 'permMNIST':
         # configurations
         config = DATASET_CONFIGS['mnist'] # 'mnist': {'size': 32, 'channels': 1, 'classes': 10}
-        classes_per_task = 10 # learns all the tasks in a go, then permuted 1 then 2 ,3, ...
+        classes_per_task = 10 # learns all [non-permuted] the tasks in a go, then permuted 1, permuted 2 , permuted 3, ...
         if not only_config: # not passed in main.py, taking default value
             # prepare dataset
             train_dataset = get_dataset('mnist', type="train", permutation=None, dir=data_dir,
@@ -204,18 +204,18 @@ def get_multitask_experiment(name, scenario, tasks, data_dir="./datasets", only_
                     test_dataset, transform=transforms.Lambda(lambda x, p=perm: _permutate_image_pixels(x, p)),
                     target_transform=target_transform
                 ))
-  #######################################################################################################################################################
+#########################################################################################################################################################
     elif name == 'splitMNIST':
         # check for number of tasks
         if tasks>10:
             raise ValueError("Experiment 'splitMNIST' cannot have more than 10 tasks!")
         # configurations
-        config = DATASET_CONFIGS['mnist28']
+        config = DATASET_CONFIGS['mnist28']  #  'mnist28': {'size': 28, 'channels': 1, 'classes': 10}
         classes_per_task = int(np.floor(10 / tasks))
         if not only_config:
             # prepare permutation to shuffle label-ids (to create different class batches for each random seed)
-            permutation = np.array(list(range(10))) if exception else np.random.permutation(list(range(10)))
-            target_transform = transforms.Lambda(lambda y, p=permutation: int(p[y]))
+            permutation = np.array(list(range(10))) if exception else np.random.permutation(list(range(10)))  # if exception true, dont shuffle classes
+            target_transform = transforms.Lambda(lambda y, p=permutation: int(p[y]))  # returns the class at a given position of permutation list
             # prepare train and test datasets with all classes
             mnist_train = get_dataset('mnist28', type="train", dir=data_dir, target_transform=target_transform,
                                       verbose=verbose)
