@@ -8,7 +8,7 @@ import main
 from param_values import set_default_values
 
 
-description = 'Compare two ways of using task-ID info (with different CL strategies) on permuted / split MNIST.'
+description = 'Compare two ways of using task-ID info (with different CL strategies) on permuted / split MNIST / cifar10.'
 parser = argparse.ArgumentParser('./_compare_taskID.py', description=description)
 parser.add_argument('--seed', type=int, default=1, help='[first] random seed (for each random-module used)')
 parser.add_argument('--n-seeds', type=int, default=1, help='how often to repeat?')
@@ -19,7 +19,7 @@ parser.add_argument('--results-dir', type=str, default='./results', dest='r_dir'
 
 # expirimental task parameters.
 task_params = parser.add_argument_group('Task Parameters')
-task_params.add_argument('--experiment', type=str, default='permMNIST', choices=['permMNIST', 'splitMNIST'])
+task_params.add_argument('--experiment', type=str, default='permMNIST', choices=['permMNIST', 'splitMNIST', 'cifar10'])
 task_params.add_argument('--tasks', type=int, help='number of tasks')
 
 # specify loss functions to be used
