@@ -177,7 +177,7 @@ def get_multitask_experiment(name, scenario, tasks, data_dir="./datasets", only_
     '''Load, organize and return train- and test-dataset for requested experiment.
 
     [exception]:    <bool>; if True, for visualization no permutation is applied to first task (permMNIST) or digits
-                            are not shuffled before being distributed over the tasks (splitMNIST)'''
+                            are not shuffled before being distributed over the tasks (splitMNIST/cifar10)'''
 
     # depending on experiment, get and organize the datasets
     if name == 'permMNIST':
@@ -244,7 +244,7 @@ def get_multitask_experiment(name, scenario, tasks, data_dir="./datasets", only_
     elif name == 'cifar10':
         # check for number of tasks
         if tasks>10:
-            raise ValueError("Experiment 'splitMNIST' cannot have more than 10 tasks!")
+            raise ValueError("Experiment 'cifar10' cannot have more than 10 tasks!")
         # configurations
         config = DATASET_CONFIGS['cifar10']  #  'mnist28': {'size': 28, 'channels': 1, 'classes': 10}
         classes_per_task = int(np.floor(10 / tasks))
