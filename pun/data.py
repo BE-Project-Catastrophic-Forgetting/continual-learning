@@ -253,9 +253,9 @@ def get_multitask_experiment(name, scenario, tasks, data_dir="./datasets", only_
             permutation = np.array(list(range(10))) if exception else np.random.permutation(list(range(10)))  # if exception true, dont shuffle classes
             target_transform = transforms.Lambda(lambda y, p=permutation: int(p[y]))  # returns the class at a given position of permutation list
             # prepare train and test datasets with all classes
-            mnist_train = get_dataset('cifar10', type="train", dir=data_dir, target_transform=target_transform,
+            cifar_train = get_dataset('cifar10', type="train", dir=data_dir, target_transform=target_transform,
                                       verbose=verbose)
-            mnist_test = get_dataset('cifar10', type="test", dir=data_dir, target_transform=target_transform,
+            cifar_test = get_dataset('cifar10', type="test", dir=data_dir, target_transform=target_transform,
                                      verbose=verbose)
             # generate labels-per-task
             labels_per_task = [
@@ -268,8 +268,8 @@ def get_multitask_experiment(name, scenario, tasks, data_dir="./datasets", only_
                 target_transform = transforms.Lambda(
                     lambda y, x=labels[0]: y - x
                 ) if scenario=='domain' else None
-                train_datasets.append(SubDataset(mnist_train, labels, target_transform=target_transform))
-                test_datasets.append(SubDataset(mnist_test, labels, target_transform=target_transform))
+                train_datasets.append(SubDataset(cifar_train, labels, target_transform=target_transform))
+                test_datasets.append(SubDataset(cifar_test, labels, target_transform=target_transform))
     else:
         raise RuntimeError('Given undefined experiment: {}'.format(name))
 
